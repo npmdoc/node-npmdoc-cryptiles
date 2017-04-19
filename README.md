@@ -1,9 +1,14 @@
-# api documentation for  [cryptiles (v3.1.1)](https://github.com/hapijs/cryptiles#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-cryptiles.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-cryptiles) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-cryptiles.svg)](https://travis-ci.org/npmdoc/node-npmdoc-cryptiles)
+# npmdoc-cryptiles
+
+#### api documentation for  [cryptiles (v3.1.1)](https://github.com/hapijs/cryptiles#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-cryptiles.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-cryptiles) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-cryptiles.svg)](https://travis-ci.org/npmdoc/node-npmdoc-cryptiles)
+
 #### General purpose crypto utilities
 
-[![NPM](https://nodei.co/npm/cryptiles.png?downloads=true)](https://www.npmjs.com/package/cryptiles)
+[![NPM](https://nodei.co/npm/cryptiles.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/cryptiles)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-cryptiles/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-cryptiles_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-cryptiles/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-cryptiles/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-cryptiles/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-cryptiles/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-cryptiles/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-cryptiles/build/screenCapture.npmPackageListing.svg)
 
@@ -46,17 +51,14 @@
     "main": "lib/index.js",
     "maintainers": [
         {
-            "name": "hueniverse",
-            "email": "eran@hueniverse.com"
+            "name": "hueniverse"
         },
         {
-            "name": "ceejbot",
-            "email": "ceejceej@gmail.com"
+            "name": "ceejbot"
         }
     ],
     "name": "cryptiles",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/hapijs/cryptiles.git"
@@ -67,117 +69,6 @@
     },
     "version": "3.1.1"
 }
-```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module cryptiles](#apidoc.module.cryptiles)
-1.  [function <span class="apidocSignatureSpan">cryptiles.</span>fixedTimeComparison (a, b)](#apidoc.element.cryptiles.fixedTimeComparison)
-1.  [function <span class="apidocSignatureSpan">cryptiles.</span>randomBits (bits)](#apidoc.element.cryptiles.randomBits)
-1.  [function <span class="apidocSignatureSpan">cryptiles.</span>randomDigits (size)](#apidoc.element.cryptiles.randomDigits)
-1.  [function <span class="apidocSignatureSpan">cryptiles.</span>randomString (size)](#apidoc.element.cryptiles.randomString)
-
-
-
-# <a name="apidoc.module.cryptiles"></a>[module cryptiles](#apidoc.module.cryptiles)
-
-#### <a name="apidoc.element.cryptiles.fixedTimeComparison"></a>[function <span class="apidocSignatureSpan">cryptiles.</span>fixedTimeComparison (a, b)](#apidoc.element.cryptiles.fixedTimeComparison)
-- description and source-code
-```javascript
-fixedTimeComparison = function (a, b) {
-
-    if (typeof a !== 'string' ||
-        typeof b !== 'string') {
-
-        return false;
-    }
-
-    let mismatch = (a.length === b.length ? 0 : 1);
-    if (mismatch) {
-        b = a;
-    }
-
-    for (let i = 0; i < a.length; ++i) {
-        const ac = a.charCodeAt(i);
-        const bc = b.charCodeAt(i);
-        mismatch |= (ac ^ bc);
-    }
-
-    return (mismatch === 0);
-}
-```
-- example usage
-```shell
-n/a
-```
-
-#### <a name="apidoc.element.cryptiles.randomBits"></a>[function <span class="apidocSignatureSpan">cryptiles.</span>randomBits (bits)](#apidoc.element.cryptiles.randomBits)
-- description and source-code
-```javascript
-randomBits = function (bits) {
-
-    if (!bits ||
-        bits < 0) {
-
-        return Boom.internal('Invalid random bits count');
-    }
-
-    const bytes = Math.ceil(bits / 8);
-    try {
-        return Crypto.randomBytes(bytes);
-    }
-    catch (err) {
-        return Boom.internal('Failed generating random bits: ' + err.message);
-    }
-}
-```
-- example usage
-```shell
-n/a
-```
-
-#### <a name="apidoc.element.cryptiles.randomDigits"></a>[function <span class="apidocSignatureSpan">cryptiles.</span>randomDigits (size)](#apidoc.element.cryptiles.randomDigits)
-- description and source-code
-```javascript
-randomDigits = function (size) {
-
-    const buffer = exports.randomBits(size * 8);
-    if (buffer instanceof Error) {
-        return buffer;
-    }
-
-    const digits = [];
-    for (let i = 0; i < buffer.length; ++i) {
-        digits.push(Math.floor(buffer[i] / 25.6));
-    }
-
-    return digits.join('');
-}
-```
-- example usage
-```shell
-n/a
-```
-
-#### <a name="apidoc.element.cryptiles.randomString"></a>[function <span class="apidocSignatureSpan">cryptiles.</span>randomString (size)](#apidoc.element.cryptiles.randomString)
-- description and source-code
-```javascript
-randomString = function (size) {
-
-    const buffer = exports.randomBits((size + 1) * 6);
-    if (buffer instanceof Error) {
-        return buffer;
-    }
-
-    const string = buffer.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '');
-    return string.slice(0, size);
-}
-```
-- example usage
-```shell
-n/a
 ```
 
 
